@@ -16,6 +16,21 @@ find_package(rclpy REQUIRED)
 ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 install(PROGRAMS scripts/control_ui.py DESTINATION lib/${PROJECT_NAME})
 
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
+add_executable(qprocess
+  src/qprocess.cpp
+)
+target_link_libraries(qprocess PRIVATE Qt6::Widgets)
+ament_target_dependencies(qprocess
+  Qt6
+)
+install(
+  TARGETS qprocess
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
