@@ -4,7 +4,7 @@ project(nav_ui)
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
-
+set(CMAKE_AUTOMOC ON)
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
@@ -18,16 +18,20 @@ install(PROGRAMS scripts/control_ui.py DESTINATION lib/${PROJECT_NAME})
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-add_executable(qprocess
-  src/qprocess.cpp
+add_executable(qprocess_learn
+  src/qprocess_learn.cpp
+  include/${PROJECT_NAME}/qprocess_learn.hpp
 )
-target_link_libraries(qprocess PRIVATE Qt6::Widgets)
-ament_target_dependencies(qprocess
+target_link_libraries(qprocess_learn PRIVATE Qt6::Widgets)
+ament_target_dependencies(qprocess_learn
   Qt6
 )
 install(
-  TARGETS qprocess
+  TARGETS qprocess_learn
   DESTINATION lib/${PROJECT_NAME}
+)
+target_include_directories(qprocess_learn
+  PRIVATE include/${PROJECT_NAME}
 )
 
 
