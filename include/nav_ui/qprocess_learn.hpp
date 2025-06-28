@@ -1,8 +1,10 @@
-# pragma once
+#pragma once
 
 #include <QMainWindow>
 #include <QPushButton>
 #include <QDebug>
+#include <QProcess>
+#include <QString>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -20,6 +22,11 @@ public:
     
 private slots:
     void handleButton() {
-        qDebug() << "Button clicked!";
+        QProcess process;
+        process.setProgram("/opt/ros/humble/bin/ros2");
+        process.start();
+        process.waitForFinished();
+        QByteArray data = process.readAllStandardOutput();
+        qDebug() << QString::fromUtf8(data.data(),data.size()).length();
     }
 };
